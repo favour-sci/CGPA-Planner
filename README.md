@@ -57,7 +57,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Author
 
-**Favour James**
+**Favour zmodupeoluwa James**
 * **Role:** Data Analyst & Research Consultant
 * **Institution:** University of Ibadan
 * **Portfolio:** [View Portfolio](https://favour-sci.github.io/Portfolio-Website/)
