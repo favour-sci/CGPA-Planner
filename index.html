@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Grade Planner Pro by Favour James</title>
+    <title>Student Grade Planner Pro</title>
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
@@ -124,7 +124,7 @@
         .bar-fill { height: 100%; background: linear-gradient(90deg, var(--secondary), var(--primary)); width: 0%; transition: width 0.5s ease; }
 
         .summary-panel { background: var(--white); border-radius: 10px; padding: 20px; box-shadow: var(--shadow); height: fit-content; }
-        .key-table th { background: #666; font-size: 0.8rem; padding: 8px; }
+        .key-table th { background-color: var(--primary); color: var(--white); font-size: 0.8rem; padding: 8px; }
         .key-table td { font-size: 0.8rem; padding: 5px; text-align: center; }
 
         .stat-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed #eee; font-size: 0.9rem; }
@@ -156,8 +156,8 @@
         <p>The <strong>Student Grade Planner Pro</strong> is an interactive dashboard designed to help students visualize their academic performance. It allows users to input test and exam scores to forecast their GPA/CGPA dynamically. Features include automatic data visualization, grade scale toggling (4.0/5.0), and data integration.</p>
         <hr style="border-color: #444; margin: 20px 0;">
         <h2 style="color: var(--secondary);">About Author</h2>
-        <p>Favour James is a Statistics student at the University of Ibadan, and a passionate Data Analyst and Research Consultant dedicated to helping individuals and organizations make informed decisions through data-driven insights. <p>
-        <p>Her interests span data analysis, problem-solving, and educational technology, where she combines analytical precision with creativity to create practical, student-focused, and community-impactful solutions. Favour’s belief is that data is about uncovering stories, improving systems, and creating value in communities. She continues to lead and contribute to innovative projects that promote digital learning, analytical thinking, and applied research.</p>
+        <p><strong>Favour James</strong> is a Statistics student at the University of Ibadan, and a passionate Data Analyst and Research Consultant dedicated to helping individuals and organizations make informed decisions through data-driven insights. <p>
+        <p>Her interests span data analysis, problem-solving, and educational technology, where she combines analytical precision with creativity to create practical, student-focused, and community-impactful solutions. Favour’s work reflects her belief that understanding data is not just about numbers, it’s about uncovering stories, improving systems, and creating value in communities. She continues to lead and contribute to innovative projects that promote digital learning, analytical thinking, and applied research.</p>
         <p><i class="fas fa-globe"></i> <a href="https://favour-sci.github.io/Portfolio-Website/" target="_blank" style="color:inherit;">Portfolio Website</a></p>
         <p><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/james-favour/" target="_blank" style="color:inherit;">LinkedIn Profile</a></p>
         <p><i class="fas fa-envelope"></i> favourjames201@gmail.com</p>
@@ -203,7 +203,7 @@
 
         <div class="card card-gauge-2">
             <div class="gauge-wrapper">
-                <div class="gauge-circle">
+                <div class="gauge-circle" >
                     <div class="gauge-text">
                         <span class="gauge-value" id="dispCGPA">0.00</span>
                         <span class="gauge-label">Overall CGPA</span>
@@ -229,7 +229,7 @@
 
     <div class="section-title">
         <span><i class="fas fa-edit"></i> Paint Your Scenario</span>
-    </div>
+        </div>
 
     <div class="template-grid">
         <div class="table-container">
@@ -238,10 +238,10 @@
                     <tr>
                         <th style="width: 5%;">SN</th>
                         <th style="width: 25%;">Course Code</th>
-                        <th style="width: 10%;">Unit</th>
+                        <th style="width: 15%;">Course Unit</th>
                         <th style="width: 15%;">Test Score</th>
                         <th style="width: 15%;">Exam Score</th>
-                        <th style="width: 15%;">Total</th>
+                        <th style="width: 15%;">Total Score</th>
                         <th style="width: 5%;">Grade</th>
                         <th style="width: 10%;">WGP</th>
                     </tr>
@@ -254,9 +254,11 @@
         </div>
 
         <div class="summary-panel">
-            <h4 style="margin-top:0; color:var(--primary); text-align:center;">Grading Key</h4>
+            <div style="margin-top:0; color:var(--primary); text-align:center; font-weight:bold; font-size:1.1rem; margin-bottom: 15px;">
+    <span><i class="fas fa-table"></i> Grading Key</span>
+    </div>
             <table class="key-table" id="keyTable">
-                <thead><tr><th>Range</th><th>Grd</th><th>Pt</th></tr></thead>
+                <thead><tr><th>Range</th><th>Grade</th><th>Point</th></tr></thead>
                 <tbody id="keyBody"></tbody>
             </table>
 
@@ -276,11 +278,11 @@
                 <div style="font-size: 0.8rem; font-weight: bold; margin-bottom: 5px;">Historical Data</div>
                 <div class="stat-row" style="border:none; padding: 5px 0;">
                     <span>Prev CGPA:</span>
-                    <input type="number" id="prevCGPA" value="3.50" step="0.01" onchange="calculateAll()" style="width: 70px;">
+                    <input type="number" id="prevCGPA" value="" placeholder="Optional" step="0.01" onchange="calculateAll()" style="width: 70px;">
                 </div>
                 <div class="stat-row" style="border:none; padding: 5px 0;">
                     <span>Prev Units:</span>
-                    <input type="number" id="prevUnits" value="30" onchange="calculateAll()" style="width: 70px;">
+                    <input type="number" id="prevUnits" value="" placeholder="Optional" onchange="calculateAll()" style="width: 70px;">
                 </div>
             </div>
 
@@ -444,25 +446,48 @@
             scores.push(total);
         });
 
-        const gpa = totalUnits ? (totalWGP / totalUnits).toFixed(2) : "0.00";
+        const currentGPA = totalUnits ? (totalWGP / totalUnits) : 0;
         
-        // Save history inputs whenever calculated
         saveData();
 
-        const prevCGPA = parseFloat(document.getElementById('prevCGPA').value) || 0;
-        const prevUnits = parseFloat(document.getElementById('prevUnits').value) || 0;
-        const cumUnits = prevUnits + totalUnits;
-        const cumPoints = (prevCGPA * prevUnits) + totalWGP;
-        const cgpa = cumUnits ? (cumPoints / cumUnits).toFixed(2) : "0.00";
+        // --- NEW FLEXIBLE CGPA LOGIC ---
+        const prevCGPAInput = document.getElementById('prevCGPA').value;
+        const prevUnitsInput = document.getElementById('prevUnits').value;
 
-        document.getElementById('dispGPA').innerText = gpa;
-        document.getElementById('dispCGPA').innerText = cgpa;
+        const prevCGPA = prevCGPAInput !== "" ? parseFloat(prevCGPAInput) : 0;
+        const prevUnits = prevUnitsInput !== "" ? parseFloat(prevUnitsInput) : 0;
+        
+        let overallCGPA = 0;
+
+        if (prevCGPA > 0) {
+            if (prevUnits > 0) {
+                // Scenario 1: Standard Weighted CGPA (Most Accurate)
+                // (OldPoints + NewPoints) / (OldUnits + NewUnits)
+                overallCGPA = ((prevCGPA * prevUnits) + totalWGP) / (prevUnits + totalUnits);
+            } else {
+                // Scenario 2: Simple Aggregate (User Request - "Units not compulsory")
+                // (OldCGPA + CurrentGPA) / 2
+                // We only do this if Current GPA exists, otherwise just show Previous
+                if (currentGPA > 0) {
+                    overallCGPA = (prevCGPA + currentGPA) / 2;
+                } else {
+                    overallCGPA = prevCGPA;
+                }
+            }
+        } else {
+            // Scenario 3: No previous data, so CGPA = Current GPA
+            overallCGPA = currentGPA;
+        }
+
+        // Display
+        document.getElementById('dispGPA').innerText = currentGPA.toFixed(2);
+        document.getElementById('dispCGPA').innerText = overallCGPA.toFixed(2);
         document.getElementById('sumUnits').innerText = totalUnits;
         document.getElementById('sumWGP').innerText = totalWGP;
-        document.getElementById('sumOverallCGPA').innerText = cgpa;
+        document.getElementById('sumOverallCGPA').innerText = overallCGPA.toFixed(2);
 
         let honour = "";
-        const val = parseFloat(cgpa);
+        const val = parseFloat(overallCGPA);
         if(currentScale === 5) {
             if(val >= 4.50) honour = "First Class Honours";
             else if(val >= 3.50) honour = "Second Class Upper";
@@ -516,11 +541,25 @@
                     backgroundColor: ['#8B5A2B', '#dcb368', '#e8d5b5', '#999', '#555','#c0392b'] 
                 }] 
             },
+            plugins: [ChartDataLabels], // Enable Plugin for Donut
             options: { 
                 cutout: '60%', 
-                plugins: { legend: {position: 'right', labels: {boxWidth: 10}} }, 
                 responsive: true, 
-                maintainAspectRatio: false 
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }, // HIDE LEGEND
+                    datalabels: {
+                        color: '#fff',
+                        font: { weight: 'bold', size: 12 },
+                        formatter: function(value, context) {
+                            if (value > 0) {
+                                return context.chart.data.labels[context.dataIndex] + ": " + value;
+                            } else {
+                                return "";
+                            }
+                        }
+                    }
+                }
             }
         });
     }
