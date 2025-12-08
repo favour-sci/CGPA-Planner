@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Grade Planner Pro</title>
+    <title>Student Grade Planner Pro by Favour Modupeoluwa James</title>
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
@@ -111,7 +111,7 @@
 
         table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
         th { background-color: var(--primary); color: white; padding: 12px; font-weight: 600; text-align: left; }
-        td { padding: 10px; border-bottom: 1px solid #eee; }
+        td { padding: 10px; border-bottom: 1px solid #eee; vertical-align: middle; }
         tr:hover { background-color: #f9f2e8; }
 
         input {
@@ -140,6 +140,13 @@
         .btn-action:hover { background: #6e4620; transform: translateY(-2px); }
         .btn-reset { background: #95a5a6; font-size: 0.8rem; padding: 5px 10px;}
         .btn-reset:hover { background: #7f8c8d; }
+
+        /* Delete Button Style */
+        .btn-delete {
+            background: none; border: none; color: #e74c3c; cursor: pointer; font-size: 1.1rem;
+            transition: transform 0.2s; padding: 5px;
+        }
+        .btn-delete:hover { transform: scale(1.2); color: #c0392b; }
 
         @media (max-width: 1000px) {
             .dashboard-grid { grid-template-columns: 1fr 1fr; }
@@ -174,8 +181,8 @@
         <div class="scale-selector" title="Switch Grading System">
             <i class="fas fa-balance-scale"></i>
             <select id="scaleSelect" onchange="changeScale()">
-                <option value="5">5.0 CGPA scale</option>
-                <option value="4">4.0 CGPA scale</option>
+                <option value="5">5.0 CGPA Scale</option>
+                <option value="4">4.0 CGPA Scale</option>
             </select>
         </div>
         <button class="menu-btn" onclick="openNav()"><i class="fas fa-bars"></i></button>
@@ -229,7 +236,7 @@
 
     <div class="section-title">
         <span><i class="fas fa-edit"></i> Paint Your Scenario</span>
-        </div>
+    </div>
 
     <div class="template-grid">
         <div class="table-container">
@@ -238,13 +245,13 @@
                     <tr>
                         <th style="width: 5%;">SN</th>
                         <th style="width: 25%;">Course Code</th>
-                        <th style="width: 15%;">Course Unit</th>
+                        <th style="width: 10%;">Unit</th>
                         <th style="width: 15%;">Test Score</th>
                         <th style="width: 15%;">Exam Score</th>
                         <th style="width: 15%;">Total Score</th>
                         <th style="width: 5%;">Grade</th>
                         <th style="width: 10%;">WGP</th>
-                    </tr>
+                        <th style="width: 5%;">Act</th> </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
             </table>
@@ -255,8 +262,8 @@
 
         <div class="summary-panel">
             <div style="margin-top:0; color:var(--primary); text-align:center; font-weight:bold; font-size:1.1rem; margin-bottom: 15px;">
-    <span><i class="fas fa-table"></i> Grading Key</span>
-    </div>
+                <span><i class="fas fa-table"></i> Grading Key</span>
+            </div>
             <table class="key-table" id="keyTable">
                 <thead><tr><th>Range</th><th>Grade</th><th>Point</th></tr></thead>
                 <tbody id="keyBody"></tbody>
@@ -298,7 +305,7 @@
 </div>
 
 <script>
-    /* --- LOGIC SCRIPT WITH AUTO-SAVE --- */
+    /* --- LOGIC SCRIPT WITH AUTO-SAVE & DELETE --- */
 
     // Data State
     let currentScale = 5; 
@@ -400,6 +407,7 @@
                 </td>
                 <td style="font-weight:bold;" id="grd-${i}">-</td>
                 <td id="wgp-${i}">0</td>
+                <td><button class="btn-delete" onclick="deleteRow(${i})" title="Delete Course"><i class="fas fa-trash-alt"></i></button></td>
             `;
             tbody.appendChild(tr);
         });
@@ -410,6 +418,15 @@
         initialData.push({ code: "NEW 000", unit: 3, test: 0, exam: 0 });
         saveData(); // Save new row
         renderTable();
+    }
+
+    // --- DELETE FUNCTION ---
+    function deleteRow(index) {
+        if(confirm("Are you sure you want to delete this course?")) {
+            initialData.splice(index, 1); // Remove item at index
+            saveData(); // Save new state
+            renderTable(); // Re-render table and Recalculate
+        }
     }
 
     function updateData(index, field, value) {
