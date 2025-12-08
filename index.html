@@ -493,11 +493,11 @@
             else if(val >= 3.50) honour = "Second Class Upper";
             else if(val >= 2.40) honour = "Second Class Lower";
             else if(val >= 1.50) honour = "Third Class";
-            else honour = "Pass / Fail";
+            else honour = "Pass";
         } else {
-            if(val >= 3.50) honour = "Distinction";
-            else if(val >= 3.00) honour = "Upper Credit";
-            else if(val >= 2.50) honour = "Lower Credit";
+            if(val >= 3.50) honour = "First Class Honours";
+            else if(val >= 3.00) honour = "Second Class Upper";
+            else if(val >= 2.50) honour = "Second Class Lower";
             else honour = "Pass";
         }
         document.getElementById('classHonours').innerText = honour;
