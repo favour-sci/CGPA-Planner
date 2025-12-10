@@ -366,7 +366,7 @@
             if (score >= 70) return { g: 'A', p: 4.00 };
             if (score >= 60) return { g: 'B', p: 3.00 };
             if (score >= 50) return { g: 'C', p: 2.00 };
-            if (score >= 40) return { g: 'D', p: 1.00 };
+            if (score >= 45) return { g: 'D', p: 1.00 };
             return { g: 'F', p: 0.00 };
         }
     }
@@ -376,7 +376,7 @@
         tbody.innerHTML = '';
         const ranges = currentScale === 5 
             ? [ ['70-100','A',5], ['60-69','B',4], ['50-59','C',3], ['45-49','D',2], ['40-44','E',1], ['0-39','F',0] ]
-            : [ ['70-100','A',4], ['60-69','B',3], ['50-59','C',2], ['40-49','D',1], ['0-39','F',0] ];
+            : [ ['70-100','A',4], ['60-69','B',3], ['50-59','C',2], ['45-49','D',1], ['0-44','F',0] ];
 
         ranges.forEach(r => {
             tbody.innerHTML += `<tr><td>${r[0]}</td><td><b>${r[1]}</b></td><td>${r[2]}</td></tr>`;
@@ -417,7 +417,7 @@
     }
 
     function addRow() {
-        initialData.push({ code: "Add", unit: 0, test: 0, exam: 0 });
+        initialData.push({ code: "add", unit: 0, test: 0, exam: 0 });
         saveData(); // Save new row
         renderTable();
     }
@@ -615,6 +615,7 @@
 </script>
 </body>
 </html>
+
 
 
 
